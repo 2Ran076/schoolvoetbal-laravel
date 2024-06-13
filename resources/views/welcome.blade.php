@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="jumbotron text-center">
-        <h1>Welcome to Schoolvoetbal</h1>
+        <h1>Welkom bij Schoolvoetbal</h1>
         <p class="lead">Manage your teams and games easily.</p>
         <a href="{{ route('teams.index') }}" class="btn btn-primary">View Teams</a>
         <a href="{{ route('games.index') }}" class="btn btn-secondary">View Games</a>
