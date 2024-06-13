@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\TeamController;
+use App\Http\Controllers\GameController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +19,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource('teams', TeamController::class);
+Route::resource('games', GameController::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
