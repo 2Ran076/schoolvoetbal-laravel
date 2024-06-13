@@ -9,30 +9,40 @@ class TeamController extends Controller
 {
     public function index()
     {
-        return Team::all();
+        $teams = Team::all();
+        return view('teams.index', compact('teams'));
+    }
+
+    public function create()
+    {
+        return view('teams.create');
     }
 
     public function store(Request $request)
     {
-        $team = Team::create($request->all());
-        return response()->json($team, 201);
+        Team::create($request->all());
+        return redirect()->route('teams.index');
     }
 
-    public function show($id)
+    public function show(Team $team)
     {
-        return Team::find($id);
+        return view('teams.show', compact('team'));
     }
 
-    public function update(Request $request, $id)
+    public function edit(Team $team)
     {
-        $team = Team::findOrFail($id);
+        return view('teams.edit', compact('team'));
+    }
+
+    public function update(Request $request, Team $team)
+    {
         $team->update($request->all());
-        return response()->json($team, 200);
+        return redirect()->route('teams.index');
     }
 
-    public function destroy($id)
+    public function destroy(Team $team)
     {
-        Team::destroy($id);
-        return response()->json(null, 204);
+        $team->delete();
+        return redirect()->route('teams.index');
     }
 }
