@@ -30,5 +30,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(Goal::class, 'player_id');
     }
+
+    protected $fillable = [
+        'name', 'email', 'password', 'admin', 'team_id'
+    ];
+
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
 }
 
