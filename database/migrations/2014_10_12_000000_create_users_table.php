@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->boolean('admin');
+            $table->boolean('admin')->default(false);
             $table->unsignedBigInteger('team_id')->nullable();
+            $table->rememberToken();
             $table->timestamps();
     
             $table->foreign('team_id')->references('id')->on('teams')->onDelete('set null');
