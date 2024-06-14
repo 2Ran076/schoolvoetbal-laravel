@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Team;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TeamController extends Controller
 {
     public function index()
     {
-        $teams = Team::all();
+        $teams = Team::where('creator_id', Auth::id())->get();
         return view('teams.index', compact('teams'));
     }
 
@@ -20,8 +21,17 @@ class TeamController extends Controller
 
     public function store(Request $request)
     {
-        Team::create($request->all());
-        return redirect()->route('teams.index');
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        Team::create([
+            'name' => $request->name,
+            'points' => 0,
+            'creator_id' => Auth::id(),
+        ]);
+
+        return redirect()->route('teams.index')->with('success', 'Team created successfully.');
     }
 
     public function show(Team $team)
