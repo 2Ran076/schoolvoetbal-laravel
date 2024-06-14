@@ -1,32 +1,47 @@
-<!-- resources/views/games/create.blade.php -->
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <h1>Create Game</h1>
-        <form action="{{ route('games.store') }}" method="POST">
-            @csrf
-            <div class="form-group">
-                <label for="team1_id">Team 1 ID</label>
-                <input type="number" name="team1_id" class="form-control" id="team1_id" required>
-            </div>
-            <div class="form-group">
-                <label for="team2_id">Team 2 ID</label>
-                <input type="number" name="team2_id" class="form-control" id="team2_id" required>
-            </div>
-            <div class="form-group">
-                <label for="field">Field</label>
-                <input type="text" name="field" class="form-control" id="field" required>
-            </div>
-            <div class="form-group">
-                <label for="referee_id">Referee ID</label>
-                <input type="number" name="referee_id" class="form-control" id="referee_id" required>
-            </div>
-            <div class="form-group">
-                <label for="time">Time</label>
-                <input type="datetime-local" name="time" class="form-control" id="time" required>
-            </div>
-            <button type="submit" class="btn btn-success">Create</button>
-        </form>
-    </div>
+<div class="container">
+    <h2>Create a New Game</h2>
+    <form method="POST" action="{{ route('games.store') }}">
+        @csrf
+        <div class="mb-3">
+            <label for="team1_id" class="form-label">Team 1:</label>
+            <select id="team1_id" name="team1_id" class="form-control" required>
+                @foreach ($teams as $team)
+                    <option value="{{ $team->id }}">{{ $team->name }}</option>
+                @endforeach
+            </select>
+            @error('team1_id')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="team2_id" class="form-label">Team 2:</label>
+            <select id="team2_id" name="team2_id" class="form-control" required>
+                @foreach ($teams as $team)
+                    <option value="{{ $team->id }}">{{ $team->name }}</option>
+                @endforeach
+            </select>
+            @error('team2_id')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="field" class="form-label">Field:</label>
+            <input type="text" class="form-control" id="field" name="field" required>
+            @error('field')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="time" class="form-label">Time:</label>
+            <input type="datetime-local" class="form-control" id="time" name="time" required>
+            @error('time')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <button type="submit" class="btn btn-primary">Create Game</button>
+    </form>
+</div>
 @endsection
